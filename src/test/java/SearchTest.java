@@ -15,11 +15,10 @@ public class SearchTest extends SauceTestBase
 		SearchPage
 				.Open(driver)
 				.enterSearchText("rocket")
-				.selectCategory(SearchPage.Categories.ToysAndHobbies)
+				.selectCategory("Toys & Hobbies")
 				.clickSearchButton();
 
-		// check whether your test succeeds
 		String title = driver.getTitle();
-		assertThat(title).contains("rocket");
+		assertThat(title).isEqualTo("rocket in Toys and Hobbies | eBay");
 	}
 }

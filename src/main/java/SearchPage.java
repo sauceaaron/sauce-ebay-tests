@@ -1,5 +1,10 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class SearchPage extends PageObject
 {
@@ -38,9 +43,35 @@ public class SearchPage extends PageObject
 
 	public SearchPage selectCategory(int category)
 	{
-		find(categoriesDropDown).findElements(By.tagName("option")).get(category);
+		WebElement option = find(categoriesDropDown).findElements(By.tagName("option")).get(category);
+
+		return selectCategory(option);
+	}
+
+
+	public SearchPage selectCategory(String category)
+	{
+		List<WebElement> options = find(categoriesDropDown).findElements(By.tagName("option"));
+
+		WebElement option = options.stream()
+				.filter(o -> o.getText().equals(category))
+				.findFirst().get();
+
+
+		return selectCategory(option);
+	}
+
+	public SearchPage selectCategory(WebElement option)
+	{
+		if (! option.isSelected())
+		{
+			option.click();
+		}
+
 		return this;
 	}
+
+
 
 	public SearchPage clickSearchButton()
 	{

@@ -50,9 +50,13 @@ public class SauceTestBase implements SauceOnDemandSessionIdProvider
 	{
 		LinkedList browsers = new LinkedList();
 
-		browsers.add(new String[]{"Windows 10", "internet explorer", "latest"});
+		browsers.add(new String[]{"Windows 10", "internet explorer", "11"});
 		browsers.add(new String[]{"MacOS 10.12", "Chrome", "latest"});
 		browsers.add(new String[]{"Linux", "Firefox", "latest"});
+
+		/* this doesn't work with Safari or Edge Driver */
+//		browsers.add(new String[]{"Windows 10", "MicrosoftEdge", "latest"});
+//		browsers.add(new String[]{"MacOS 10.13", "Safari", "11"});
 
 		return browsers;
 	}
