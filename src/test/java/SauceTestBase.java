@@ -92,7 +92,8 @@ public class SauceTestBase implements SauceOnDemandSessionIdProvider
 		driver.quit();
 	}
 
-	public String getSessionId() {
-	return sessionId;
-}
+	public String getSessionId()
+	{
+		return sessionId;
+	}
 }
