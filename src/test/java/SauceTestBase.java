@@ -1,13 +1,17 @@
+import com.saucelabs.common.SauceOnDemandAuthentication;
+import com.saucelabs.common.SauceOnDemandSessionIdProvider;
+import com.saucelabs.junit.SauceOnDemandTestWatcher;
 import com.saucelabs.saucerest.SauceREST;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class SauceTestBase
+public class SauceTestBase implements SauceOnDemandSessionIdProvider
 {
 	String SAUCE_USERNAME = System.getenv("SAUCE_USERNAME");
 	String SAUCE_ACCESS_KEY = System.getenv("SAUCE_ACCESS_KEY");
@@ -16,7 +20,13 @@ public class SauceTestBase
 			.replace("SAUCE_USERNAME", SAUCE_USERNAME)
 			.replace("SAUCE_ACCESS_KEY", SAUCE_ACCESS_KEY);
 
+	SauceOnDemandAuthentication authentication = new SauceOnDemandAuthentication(SAUCE_USERNAME, SAUCE_ACCESS_KEY);
+
+	@Rule
+	public SauceOnDemandTestWatcher resultReportingTestWatcher = new SauceOnDemandTestWatcher(this, authentication);
+
 	RemoteWebDriver driver;
+	String sessionId;
 	SauceREST api;
 
 	@Before
@@ -31,20 +41,18 @@ public class SauceTestBase
 		capabilities.setCapability("name", "eBay search test");
 
 		driver = new RemoteWebDriver(url, capabilities);
+		sessionId = driver.getSessionId().toString();
+
 		api = new SauceREST(SAUCE_USERNAME, SAUCE_ACCESS_KEY);
 	}
-
 
 	@After
 	public void teardown()
 	{
-		api.jobPassed(driver.getSessionId().toString());
 		driver.quit();
 	}
 
-	public void pause(int seconds)
-	{
-		try { Thread.sleep(seconds * 1000); }
-		catch (InterruptedException e) { e.printStackTrace(); }
-	}
+	public String getSessionId() {
+	return sessionId;
+}
 }

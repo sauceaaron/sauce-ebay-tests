@@ -1,7 +1,7 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class SearchPage
+public class SearchPage extends PageObject
 {
 	public static String url = "https://www.ebay.com";
 
@@ -14,19 +14,17 @@ public class SearchPage
 
 	public static By searchButton = By.id("gh-btn");
 
-	private WebDriver driver;
-
 	public static SearchPage Open(WebDriver driver)
 	{
-		return new SearchPage(driver).load();
+		return new SearchPage(driver).open();
 	}
 
 	public SearchPage(WebDriver driver)
 	{
-		this.driver = driver;
+		super(driver);
 	}
 
-	public SearchPage load()
+	public SearchPage open()
 	{
 		driver.get(url);
 		return this;
@@ -34,19 +32,19 @@ public class SearchPage
 
 	public SearchPage enterSearchText(String text)
 	{
-		driver.findElement(searchBox).sendKeys(text);
+		find(searchBox).sendKeys(text);
 		return this;
 	}
 
 	public SearchPage selectCategory(int category)
 	{
-		driver.findElement(categoriesDropDown).findElements(By.tagName("option")).get(category);
+		find(categoriesDropDown).findElements(By.tagName("option")).get(category);
 		return this;
 	}
 
 	public SearchPage clickSearchButton()
 	{
-		driver.findElement(searchButton).click();
+		click(searchButton);
 		return this;
 	}
 }
