@@ -2,13 +2,26 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class SearchTest
 {
+	String SAUCE_URL = "https://aaron-evans:82fda6e5-c020-40a3-8532-f817475ce55a@ondemand.saucelabs.com:443/wd/hub";
+
 	@Test
-	public void should_find_an_item()
+	public void should_find_an_item() throws MalformedURLException
 	{
-		WebDriver driver = new ChromeDriver();
+		URL url = new URL(SAUCE_URL);
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		capabilities.setCapability("platform", "Windows 10");
+		capabilities.setCapability("browserName", "Chrome");
+		capabilities.setCapability("version", "65");
+
+		WebDriver driver = new RemoteWebDriver(url, capabilities);
 
 		driver.get("https://www.ebay.com");
 
