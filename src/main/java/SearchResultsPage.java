@@ -6,4 +6,9 @@ public class SearchResultsPage extends PageObject
 	{
 		super(driver);
 	}
+
+	public static SearchResultsPage getInstance(WebDriver driver)
+	{
+		return new SearchResultsPage(driver);
+	}
 }

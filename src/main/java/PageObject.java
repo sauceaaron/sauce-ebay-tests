@@ -22,6 +22,11 @@ public class PageObject
 		return driver.getTitle();
 	}
 
+	public void checkTitle(String expected)
+	{
+		wait.until(ExpectedConditions.titleIs(expected));
+	}
+
 	public WebElement find(By locator)
 	{
 		return wait.until(ExpectedConditions.presenceOfElementLocated(locator));

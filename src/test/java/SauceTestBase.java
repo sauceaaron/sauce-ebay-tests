@@ -16,7 +16,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
 
-@Ignore
 @RunWith(ConcurrentParameterized.class)
 public class SauceTestBase implements SauceOnDemandSessionIdProvider
 {
@@ -55,8 +54,8 @@ public class SauceTestBase implements SauceOnDemandSessionIdProvider
 		browsers.add(new String[]{"Linux", "Firefox", "latest"});
 
 		/* this doesn't work with Safari or Edge Driver */
-//		browsers.add(new String[]{"Windows 10", "MicrosoftEdge", "latest"});
-//		browsers.add(new String[]{"MacOS 10.13", "Safari", "11"});
+		browsers.add(new String[]{"Windows 10", "MicrosoftEdge", "latest"});
+		browsers.add(new String[]{"MacOS 10.13", "Safari", "11"});
 
 		return browsers;
 	}

@@ -18,7 +18,8 @@ public class SearchTest extends SauceTestBase
 				.selectCategory("Toys & Hobbies")
 				.clickSearchButton();
 
-		String title = driver.getTitle();
-		assertThat(title).isEqualTo("rocket in Toys and Hobbies | eBay");
+		SearchResultsPage
+				.getInstance(driver)
+				.checkTitle("rocket in Toys and Hobbies | eBay");
 	}
 }
