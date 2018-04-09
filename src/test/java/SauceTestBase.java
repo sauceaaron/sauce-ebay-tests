@@ -50,9 +50,9 @@ public class SauceTestBase implements SauceOnDemandSessionIdProvider
 	{
 		LinkedList browsers = new LinkedList();
 
-		browsers.add(new String[]{"Windows 10", "MicrosoftEdge", "16"});
-		browsers.add(new String[]{"MacOS 10.13", "Safari", "11"});
-		browsers.add(new String[]{"Linux", "Chrome", "latest"});
+		browsers.add(new String[]{"Windows 10", "internet explorer", "latest"});
+		browsers.add(new String[]{"MacOS 10.12", "Chrome", "latest"});
+		browsers.add(new String[]{"Linux", "Firefox", "latest"});
 
 		return browsers;
 	}
@@ -80,6 +80,8 @@ public class SauceTestBase implements SauceOnDemandSessionIdProvider
 			capabilities.setCapability("build", BUILD_TAG);
 		}
 
+		System.out.println("capabilities: " + capabilities);
+
 		driver = new RemoteWebDriver(url, capabilities);
 		sessionId = driver.getSessionId().toString();
 
@@ -89,6 +91,12 @@ public class SauceTestBase implements SauceOnDemandSessionIdProvider
 	@After
 	public void teardown()
 	{
+		if (driver == null)
+		{
+			System.out.println("driver is null, can't complete session");
+			return;
+		}
+
 		driver.quit();
 	}
 
