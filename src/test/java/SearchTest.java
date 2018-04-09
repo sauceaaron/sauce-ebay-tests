@@ -3,7 +3,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -40,13 +39,10 @@ public class SearchTest
 	@Test
 	public void should_find_an_item()
 	{
-		driver.get("https://www.ebay.com");
-		driver.findElement(By.id("gh-ac")).sendKeys("rocket");
-		pause(1);
-		driver.findElements(By.tagName("select")).get(0)
-				.findElements(By.tagName("option")).get(32).click();
-		pause(1);
-		driver.findElement(By.xpath("/html[1]/body[1]/header[1]/table[1]/tbody[1]/tr[1]/td[3]/form[1]/table[1]/tbody[1]/tr[1]/td[3]/input[1]")).click();
+		driver.get(SearchPage.url);
+		driver.findElement(SearchPage.searchBox).sendKeys("rocket");
+		driver.findElement(SearchPage.categoriesDropDown).findElements(By.tagName("option")).get(SearchPage.Categories.ToysAndHobbies).click();
+		driver.findElement(SearchPage.searchButton).click();
 	}
 
 	@After
