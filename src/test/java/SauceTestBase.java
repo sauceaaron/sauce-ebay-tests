@@ -43,6 +43,8 @@ public class SauceTestBase implements SauceOnDemandSessionIdProvider
 	String browserName;
 	String browserVersion;
 
+	String BUILD_TAG = System.getenv("BUILD_TAG");
+
 	@ConcurrentParameterized.Parameters
 	public static LinkedList getPlatforms()
 	{
@@ -72,6 +74,11 @@ public class SauceTestBase implements SauceOnDemandSessionIdProvider
 		capabilities.setCapability("browserName", browserName);
 		capabilities.setCapability("version", browserVersion);
 		capabilities.setCapability("name", "eBay search test on " + browserName);
+
+		if (BUILD_TAG != null)
+		{
+			capabilities.setCapability("build", BUILD_TAG);
+		}
 
 		driver = new RemoteWebDriver(url, capabilities);
 		sessionId = driver.getSessionId().toString();
